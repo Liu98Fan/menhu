@@ -42,7 +42,7 @@ export default {
     top: 10px;
     bottom: 10px;
     width: 80%;
-    min-height: 80%;
+    min-height:  calc(93vh);
     box-shadow: 5px 5px 5px #373737;
     background-color: white;
       #login-button{
