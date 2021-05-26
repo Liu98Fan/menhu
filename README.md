@@ -2,6 +2,14 @@
 **本项目设计的是一个学术型门户网站，主要介绍实验室的学术研究等功能**
 
 ## 开发日志
+- 2021-5-26
+  - 完成people页面设计
+  - 完成publications页面设计
+  - 完成photo gallery页面设计
+  - 新增axios
+  - 新增mock
+  - 所有已完成页面均改为axios请求并走mock拦截获取数据
+
 - 2021-5-24
   - 完成researchList的数据设计
   - 完成research页面的设计
