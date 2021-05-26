@@ -9,15 +9,59 @@
 
                 <p v-show="showMore[index]">{{item.longDescription}}</p>
                 <div class="member">
-                    <span >Participating members:</span>  <a-tag class="tag" v-for="(member,index) in item.members" :key="index">{{member.name}}</a-tag>
+                    <span >Participating members:</span>  <a-tag class="tag" @click="handleTagClick(member)" v-for="(member,index) in item.members" :key="index">{{member.name}}</a-tag>
                 </div>
             </a-card>
         </div>
+<!--        the member modal-->
+        <a-modal v-model="visible" width="50%" :footer="null">
+            <div slot="title" style="text-align: center">
+                {{modal.title}}
+                <a-tag color="pink">{{modal.identity}}</a-tag>
+            </div>
+            <a-row class="member">
+                <a-col :span="8">
+                    <img src="../assets/PavlosSavvidis.jpg" style="
+                display:flex;
+                justify-content: left;
+                width: 240px;
+                aspect-ratio: auto 160 / 160;
+                height: 240px;
+                border-top-width: 1px;
+                border-right-width: 1px;
+                border-bottom-width: 1px;
+                border-left-width: 1px;
+                border-top-style: solid;
+                border-right-style: solid;
+                border-bottom-style: solid;
+                border-left-style: solid;
+                margin-right: 40px"
+                         align="left" hspace="15" vspace="5" :alt="modal.title" class="img">
+                </a-col>
+                <a-col :span="16">
+                    <h3>
+                        Scientific directions:
+                    </h3>
+                    <ul v-for="item in modal.content.directions" :key="item"><li>{{item}}</li></ul>
+                    <div>
+                        <h3>Tel:{{modal.content.tel}}</h3>
+                    </div>
+                    <div>
+                        <h3>Fax:{{modal.content.fax}}</h3>
+                    </div>
+                    <div>
+                        <h3>email:{{modal.content.email}}</h3>
+                    </div>
+                </a-col>
+            </a-row>
+        </a-modal>
     </div>
 </template>
 
 <script>
     //TODO: showMore和showLess应当做动画，比如：淡入淡出。 可以和页面切换时候动画留到最后一起做。
+    import {requestInfo} from "../axios/api/research";
+
     export default {
         name: "Research",
         data(){
@@ -68,11 +112,41 @@
                 ],
                 showMore:[false],
                 loading:false,
+                visible:false,
+                modal:{
+                    title:'',
+                    identity:'',
+                    content:{
+                        img:'',
+                        directions:'',
+                        tel:'',
+                        email:'',
+                        fax:'',
+                    }
+                }
             }
         },
+        mounted() {
+            this.loadInfo()
+        },
         methods:{
+            loadInfo(){
+              requestInfo().then(res=>{
+                  this.researchList = res
+                  console.log(res)
+              })
+            },
             showLong(index){
                 this.$set(this.showMore,index,!this.showMore[index])
+            },
+            handleTagClick(member){
+                this.modal.title = member.name
+                this.modal.identity = member.identity
+                this.modal.content.directions = member.directions
+                this.modal.content.tel = member.tel
+                this.modal.content.email = member.email
+                this.modal.content.fax = member.fax
+                this.visible = true
             }
         }
     }
@@ -118,6 +192,11 @@
                 }
             }
         }
+        .member{
+            font-weight: bolder;
+            .img{
 
+            }
+        }
     }
 </style>
