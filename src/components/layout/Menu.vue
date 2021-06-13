@@ -1,16 +1,16 @@
 <template>
     <div>
-        <a-menu v-model="menuSelect" mode="horizontal" theme="dark" @select="handleMenuClick">
+        <a-menu v-model="menuList" mode="horizontal" theme="dark" @select="handleMenuClick">
             <a-menu-item key="overview"> Overview </a-menu-item>
             <a-menu-item key="research"> Research </a-menu-item>
             <a-menu-item key="people"> People </a-menu-item>
-            <a-menu-item key="media"> Media </a-menu-item>
+<!--            <a-menu-item key="media"> Media </a-menu-item>-->
             <a-menu-item key="publications"> Publications </a-menu-item>
             <a-menu-item key="photoGallery"> Photo gallery </a-menu-item>
             <a-menu-item key="location"> Location </a-menu-item>
             <a-menu-item key="funding"> Funding </a-menu-item>
             <a-menu-item key="news"> News </a-menu-item>
-            <a-menu-item key="calendar"> Calendar </a-menu-item>
+<!--            <a-menu-item key="calendar"> Calendar </a-menu-item>-->
         </a-menu>
     </div>
 </template>
@@ -25,8 +25,16 @@
                 menuList:["overview"],
             }
         },
+        mounted() {
+            this.menuList = this.menuSelect
+        },
         computed:{
           ...mapGetters(['menuSelect'])
+        },
+        watch:{
+          menuSelect(v){
+              this.menuList = v
+          }
         },
         methods:{
             ...mapActions(['selectMenu']),
