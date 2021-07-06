@@ -49,7 +49,7 @@
         <a-divider >Students</a-divider>
         <a-empty v-if="people.students.length===0"></a-empty>
         <a-row type="flex" justify="start" :gutter="[16,16]">
-            <a-col :span="12" v-for="(student,index) in people.students" :key="student.name+index">
+            <a-col :span="12" v-for="(student,index) in people.students" :key="`${student.name}${index}`">
                 <a-card class="card" :loading="loading" >
                     <div slot="title"><span class="title">{{student.name}}</span><a-tag color="pink">{{student.identity}}</a-tag>
                         <a-button type="link" @click="editMember(student)" v-login>Edit</a-button>
@@ -71,7 +71,7 @@
                                 <h4>
                                     Scientific directions:
                                 </h4>
-                                <ul v-for="item in student.directions" :key="item" style="text-align:left"><li>{{item.title}}</li></ul>
+                                <ul v-for="item in student.directions" :key="item.id" style="text-align:left"><li>{{item.title}}</li></ul>
                             </div>
 
                             <div v-if="student.phone">
@@ -197,27 +197,29 @@
             return {
                 obj:'Insert member',
                 people:{
-                    professor:{
-                        name:'Pavlos Savvidis',
-                        identity:'Group leader',
-                        descriptions:[
-                            'Associate Professor',
-                            'Department of Materials Science and Technology',
-                            'Microelectronics Research Group, IESL-FORTH',
-                            'Heraklion, Crete, Greece',
-                        ],
-                        img:'',
-                        directions:[
-                        ],
-                        phone:'',
-                        fax:'',
-                        email:'',
-                    },
+                    professors:[
+                        {
+                            name:'Pavlos Savvidis',
+                            identity:'Group leader',
+                            description:[
+                                'Associate Professor',
+                                'Department of Materials Science and Technology',
+                                'Microelectronics Research Group, IESL-FORTH',
+                                'Heraklion, Crete, Greece',
+                            ],
+                            img:'',
+                            directions:[
+                            ],
+                            phone:'',
+                            fax:'',
+                            email:'',
+                        },
+                    ],
                     students:[
                         {
                             name:'Manolis Mavrotsoupakis',
                             identity:'PhD student',
-                            descriptions:['Research Assistant Westlake University'],
+                            description:['Research Assistant Westlake University'],
                             img:'',
                             directions:[
                             ],
@@ -291,6 +293,7 @@
                 return {professors,students}
             },
             insertProfessor(){
+                this.initModal()
                 this.professorModal = true
                 this.obj = "Insert member"
             },
@@ -406,6 +409,11 @@
             editMember(member){
                 this.professorModal = true
                 this.professorForm = member
+                let d = []
+                this.professorForm.directions.forEach(item=>{
+                    d.push(item.id)
+                })
+                this.professorForm.directions = d
                 this.obj = "Edit member"
                 this.fileList=[]
 

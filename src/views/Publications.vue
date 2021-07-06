@@ -93,7 +93,7 @@ import { fundingList} from "../axios/api/funding";
                     pdf:'',
                     author:'',
                     journal:'',
-                    funding:'',
+                    funding:[],
                 },
                 fundingList:[],
                 editModal:false,
@@ -178,8 +178,9 @@ import { fundingList} from "../axios/api/funding";
                     pdf:'',
                     author:'',
                     journal:'',
-                    funding:'',
+                    funding:[],
                 }
+                this.obj = "Insert publication"
             },
         }
     }

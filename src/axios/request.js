@@ -26,6 +26,7 @@ const err = (error) => {
 service.interceptors.request.use(config => {
   let token = store.getters['token']
   // let token =localStorage.getItem('token')
+  store.dispatch("loadTrigger",true)
   console.log('request interceptor:',token)
   if (token) {
     config.headers.Authorization ='Token ' + token;
@@ -37,6 +38,7 @@ service.interceptors.request.use(config => {
 
 // response interceptor
 service.interceptors.response.use((response) => {
+  store.dispatch("loadTrigger",false)
     return response.data
   }, err)
 

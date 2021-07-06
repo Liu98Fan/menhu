@@ -16,13 +16,21 @@
                 <a-icon type="login" />
                 Member Login
             </a-button>
-            <a-button type="link" @click="logout" v-else>
-                <a-icon type="login" />
-                Logout
-            </a-button>
+            <a-popconfirm placement="top" ok-text="Yes" cancel-text="No" @confirm="logout">
+                <template slot="title">
+                    <p>Are you sure to logout?</p>
+                </template>
+                <a-button type="link"  v-if="login">
+                    <a-icon type="login" />
+                    Logout
+                </a-button>
+            </a-popconfirm>
+
         </div>
         <!--    Different pages    -->
-        <router-view />
+        <a-spin :spinning="loading" tip="loading...">
+            <router-view  class="animate__animated animate__bounce"/>
+        </a-spin>
     </div>
   </div>
 </template>
@@ -39,7 +47,7 @@ export default {
         Header,
     },
     computed:{
-        ...mapGetters(['login','user'])
+        ...mapGetters(['login','user','loading'])
     },
     methods:{
         ...mapActions(['logOut']),
@@ -48,7 +56,7 @@ export default {
         },
         logout(){
             this.logOut()
-            this.$message.succes('logout success!')
+            this.$message.success('logout success!')
         }
     }
 }

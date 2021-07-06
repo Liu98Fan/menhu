@@ -122,8 +122,9 @@ import {addFunding, deleteFunding, editFunding, requestInfo} from "../axios/api/
                 return key.toString()
             },
             insertFunding(){
-                this.editModal = true
                 this.cleanForm()
+                this.editModal = true
+
             },
             range(start, stop, step = 1){
                 return Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step)
@@ -137,6 +138,7 @@ import {addFunding, deleteFunding, editFunding, requestInfo} from "../axios/api/
                         end:'',
                         amount:'',
                 }
+                this.obj = "Insert funding"
             },
             submitForm(formName){
                 this.$refs[formName].validate(valid=>{
@@ -147,7 +149,10 @@ import {addFunding, deleteFunding, editFunding, requestInfo} from "../axios/api/
                         }
                         let formData = new FormData()
                         Object.keys(this.fundingForm).forEach(key=>{
-                            formData.append(key,this.fundingForm[key])
+                            if(key!=='publications'){
+                                formData.append(key,this.fundingForm[key])
+                            }
+
                         })
                         if(this.obj === "Edit funding"){
                             editFunding(formData,this.fundingForm.id).then(res=>{

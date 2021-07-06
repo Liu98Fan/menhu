@@ -27,7 +27,7 @@
  **/
 
 import {requestLogin} from "../axios/api/login";
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
     export default {
         name: "Login",
         data() {
@@ -46,8 +46,12 @@ import {mapActions} from 'vuex'
                 },
             }
         },
+        computed:{
+            ...mapGetters(['menuSelect']),
+        },
         methods: {
             ...mapActions(['login']),
+
             submitForm(form){
                 this.$refs[form].validate(valid => {
                     if (valid) {
@@ -56,9 +60,9 @@ import {mapActions} from 'vuex'
                             console.log(res)
                             if(res.success){
                                 this.$message.success(res.message)
-                                //TODO: save userInfo into vuex
                                 this.login({username:this.ruleForm.username,token:res.data.token})
-                                this.$router.push('/')
+
+                                this.$router.push(`/${this.menuSelect[0]}`)
                             }else{
                                 this.$message.error(res.message)
                                 this.ruleForm = {

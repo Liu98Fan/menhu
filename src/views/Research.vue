@@ -19,7 +19,10 @@
                 </div>
                 <img :src="item.url" align="left" hspace="15" vspace="5" :alt="item.title">
                 <p>{{item.shortDescription}}<a-button type="link" @click="showLong(index)">{{!showMore[index]?'show more':'show less'}}</a-button></p>
-                <p v-show="showMore[index]">{{item.longDescription}}</p>
+
+                <p v-show="showMore[index]" >{{item.longDescription}}</p>
+
+
                 <div class="member">
                     <span >Participating members:</span>  <a-tag class="tag" @click="handleTagClick(member)" v-for="(member,index) in item.member" :key="index">{{member.name}}</a-tag>
                 </div>
@@ -79,7 +82,7 @@
             <a-form-model-item has-feedback label="longDescription" prop="longDescription">
                 <a-textarea  :row="6" v-model="researchForm.longDescription"/>
             </a-form-model-item>
-            <a-form-model-item has-feedback label="member" prop="member">
+            <a-form-model-item has-feedback label="member" >
                 <div>
                     <a-transfer
                             :data-source="memberList"
@@ -195,15 +198,10 @@
                 this.visible = true
             },
             insertResearch(){
+                this.cleanForm()
                 this.editModal = true
                 this.obj = "Insert research"
-                this.researchForm = {
-                    title:'',
-                    img:'',
-                    shortDescription:'',
-                    longDescription:'',
-                    member:[]
-                }
+
             },
             submitForm(formName){
                 this.$refs[formName].validate(valid=>{

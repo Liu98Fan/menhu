@@ -13,6 +13,10 @@ Vue.use(VueAxios,router)
 import login from './directive/directive'
 require('./mock')
 
+import animated from 'animate.css'
+
+Vue.use(animated)
+
 Vue.config.productionTip = false
 
 new Vue({

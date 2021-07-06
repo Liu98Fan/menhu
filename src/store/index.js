@@ -12,6 +12,7 @@ export default new Vuex.Store({
     },
     login:false,
     token:null,
+    loading:false,
   },
   mutations: {
     //save the select menu
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     LOGIN_OUT:(state)=>{
         state.user = {}
         state.login = false
+    },
+    LOAD_TRIGGER(state, load) {
+      state.loading = load
     }
   },
   actions: {
@@ -37,6 +41,9 @@ export default new Vuex.Store({
     },
     logOut({commit}){
       commit('LOGIN_OUT')
+    },
+    loadTrigger(context,load){
+      context.commit("LOAD_TRIGGER",load);
     }
   },
   modules: {

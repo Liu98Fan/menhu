@@ -25,11 +25,14 @@
             <a-col :span="8" class="row-center">
                 <div class="img-box">
                     <div>
-                        <img id="group-img" src="../assets/group.jpg" alt="group photo"/>
+                        <img id="group-img" :src="info.img" alt="group photo" v-if="info.img"/>
+                        <a-empty v-else></a-empty>
                     </div>
-                    <span class="tip">
-                        group photo
+                    <span class="tip" v-if="!editFlag">
+                        {{info.imgName}}
                     </span>
+                    <a-input v-model="info.imgName" style="width:200px" v-else></a-input>
+                    <div v-if="editFlag"><a-button type="link" @click="selectImg">select</a-button></div>
                 </div>
             </a-col>
             <a-col :span="8">
@@ -83,12 +86,39 @@
 
             </div>
         </div>
+        <a-modal :visible="editImg" title="select picture" width="50%" okText="ok" okType="primary" @ok="editImg=false" @cancel="editImg=false">
+            <a-row :gutter="20">
+                <a-radio-group name="radioGroup" v-model="info.img">
+                <a-col :span="8" v-for="item in photos" :key="item.id">
+                    <a-card hoverable  >
+                        <img
+                                slot="cover"
+                                :alt="item.title"
+                                :src="item.url"
+                                style="max-width: 300px;
+            max-height: 200px;"
+                        />
+                        <a-card-meta>
+                            <template slot="description">
+                                <div style="text-align: center">
+                                    <a-radio :value="item.url" >
+                                    {{item.title}}
+                                </a-radio></div>
+                            </template>
+                        </a-card-meta>
+                    </a-card>
+                </a-col>
+                </a-radio-group>
+            </a-row>
+
+        </a-modal>
     </div>
 </template>
 
 <script>
     import {requestInfo, saveInfo} from "../axios/api/overview";
     import {latestNews} from "../axios/api/news";
+    import {requestPhotos} from "../axios/api/photoGallery";
 
     export default {
         name: "Overview",
@@ -99,6 +129,8 @@
                 color:['pink','red','orange','cyan','green','blue','purple'],
                 editFlag:false,
                 back:{},
+                editImg:false,
+                photos:[],
             }
         },
         mounted() {
@@ -113,6 +145,10 @@
 
                 latestNews(7).then(res=>{
                     this.latestNews = res.data
+                })
+
+                requestPhotos().then(res=>{
+                    this.photos = res.data
                 })
             },
             editInfo(){
@@ -140,6 +176,10 @@
             },
             setDefault(){
                 this.loadInfo()
+            },
+            selectImg(){
+                this.editImg = true
+
             }
         }
     }
