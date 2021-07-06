@@ -14,7 +14,7 @@ let people = {
             'Prototype polaritonic devices',
             'Quantum Technologies',
         ],
-        tel:'',
+        phone:'',
         fax:'',
         email:'',
     },

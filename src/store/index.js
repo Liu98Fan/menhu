@@ -11,14 +11,16 @@ export default new Vuex.Store({
       username:'',
     },
     login:false,
+    token:null,
   },
   mutations: {
     //save the select menu
     SELECT_MENU:(state,menuSelect)=>{
         state.menuSelect = menuSelect
     },
-    LOGIN:(state,username)=>{
+    LOGIN:(state,{username,token})=>{
         state.user.username = username
+        state.token = token
         state.login = true
     },
     LOGIN_OUT:(state)=>{
@@ -30,8 +32,8 @@ export default new Vuex.Store({
     selectMenu({commit},menuSelect){
       commit('SELECT_MENU',menuSelect)
     },
-    login({commit},username){
-      commit('LOGIN',username)
+    login({commit},{username,token}){
+      commit('LOGIN',{username,token})
     },
     logOut({commit}){
       commit('LOGIN_OUT')

@@ -57,7 +57,7 @@ import {mapActions} from 'vuex'
                             if(res.success){
                                 this.$message.success(res.message)
                                 //TODO: save userInfo into vuex
-                                this.login(this.ruleForm.username)
+                                this.login({username:this.ruleForm.username,token:res.data.token})
                                 this.$router.push('/')
                             }else{
                                 this.$message.error(res.message)

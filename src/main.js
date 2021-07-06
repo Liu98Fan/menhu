@@ -9,11 +9,14 @@ import 'ant-design-vue/dist/antd.css';
 Vue.use(Antd);
 Vue.use(VueAxios,router)
 //-------------------------------------
+//v-login
+import login from './directive/directive'
 require('./mock')
 
 Vue.config.productionTip = false
 
 new Vue({
+  directives:{login},
   router,
   store,
   render: h => h(App)

@@ -1,10 +1,12 @@
 <template>
   <div class="home">
-<!--   The header layout   -->
-        <Header></Header>
-<!--   The menu layout   -->
-        <Menu/>
-<!--   The Login Button   -->
+      <!--   The header layout   -->
+      <Header></Header>
+      <!--   The menu layout   -->
+      <Menu/>
+    <div class="inner">
+
+        <!--   The Login Button   -->
         <div id="login-button">
             <a-button type="link"  v-if="login">
                 <a-icon type="user" />
@@ -19,8 +21,9 @@
                 Logout
             </a-button>
         </div>
-<!--    Different pages    -->
+        <!--    Different pages    -->
         <router-view />
+    </div>
   </div>
 </template>
 
@@ -54,16 +57,20 @@ export default {
 <style lang="scss" scoped>
   .home{
     position: relative;
-
     top: 10px;
     bottom: 10px;
     width: 100%;
     min-height:  calc(93vh);
     box-shadow: 5px 5px 5px #373737;
     background-color: white;
-      #login-button{
-          display: flex;
-          justify-content: flex-end;
+      .inner{
+          margin-left: 10%;
+          margin-right: 10%;
+          #login-button{
+              display: flex;
+              justify-content: flex-end;
+          }
       }
+
   }
 </style>

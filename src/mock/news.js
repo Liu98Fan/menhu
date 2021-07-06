@@ -33,7 +33,8 @@ let news = [
     {
         text:'Pavlos promoted to Associate Professor',
         month:'September',
-        year:'2011'
+        year:'2011',
+        main:false,
     },
     {
         text:'Alexandros Tzimis started his PhD and joined our group',

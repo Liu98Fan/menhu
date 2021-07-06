@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { VueAxios } from './axios'
+import store from '@/store'
 
 
 /**
@@ -9,11 +10,10 @@ import { VueAxios } from './axios'
  * @type {*|string}
  */
 // let apiBaseUrl = window._CONFIG['domianURL'] || "/jeecg-boot";
-    let apiBaseUrl = '/mock'
-//console.log("apiBaseUrl= ",apiBaseUrl)
+//     let apiBaseUrl = '/mock'
+    let apiBaseUrl = '/api'
 // 创建 axios 实例
 const service = axios.create({
-  //baseURL: '/jeecg-boot',
   baseURL: apiBaseUrl, // api base_url
   timeout: 9000 // 请求超时时间
 })
@@ -24,7 +24,12 @@ const err = (error) => {
 
 // request interceptor
 service.interceptors.request.use(config => {
-
+  let token = store.getters['token']
+  // let token =localStorage.getItem('token')
+  console.log('request interceptor:',token)
+  if (token) {
+    config.headers.Authorization ='Token ' + token;
+  }
   return config
 },(error) => {
   return Promise.reject(error)
